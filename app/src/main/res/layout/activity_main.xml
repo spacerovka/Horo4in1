@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.spacerovka.horo4in1.MainActivity">
+    tools:context=".MainActivity">
 
         <TextView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" >
-        <ImageButton
+        <Button
             android:layout_margin="20dp"
             android:id="@+id/bigmir"
             android:layout_width="0dip"
@@ -43,7 +43,7 @@
             android:onClick="showBigmirData"
             />
 
-        <ImageButton
+        <Button
             android:layout_margin="20dp"
             android:id="@+id/mailru"
             android:layout_width="0dip"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
 
-            <ImageButton
+            <Button
                 android:layout_margin="20dp"
                 android:id="@+id/hyrax"
                 android:layout_width="0dip"
@@ -65,7 +65,7 @@
                 android:onClick="showHyraxData"
                 />
 
-            <ImageButton
+            <Button
                 android:layout_margin="20dp"
                 android:id="@+id/ignio"
                 android:layout_width="0dip"
