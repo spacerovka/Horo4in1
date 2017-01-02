@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.spacerovka.horo4in1.bigmir;
+package com.spacerovka.horo4in1.mailru;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.spacerovka.horo4in1.R;
+import com.spacerovka.horo4in1.bigmir.BigmirSlidePageFragment;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -34,9 +35,9 @@ import java.util.GregorianCalendar;
  * the page number, along with some dummy text.
  *
  * <p>This class is used by the {@link
- * BigmirScreenSlideActivity} samples.</p>
+ * MailruScreenSlideActivity} samples.</p>
  */
-public class BigmirSlidePageFragment extends Fragment {
+public class MailruSlidePageFragment extends Fragment {
     /**
      * The argument key for the page number this fragment represents.
      */
@@ -50,15 +51,15 @@ public class BigmirSlidePageFragment extends Fragment {
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static BigmirSlidePageFragment create(int pageNumber) {
-        BigmirSlidePageFragment fragment = new BigmirSlidePageFragment();
+    public static MailruSlidePageFragment create(int pageNumber) {
+        MailruSlidePageFragment fragment = new MailruSlidePageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public BigmirSlidePageFragment() {
+    public MailruSlidePageFragment() {
     }
 
     @Override
@@ -83,18 +84,23 @@ public class BigmirSlidePageFragment extends Fragment {
             //TODO find preference
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
                     getString(R.string.today));
-            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + "libra" + "/";
-            (new ParseBigmir((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today"});
+            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/today/";
+            (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today"});
         }else if(mPageNumber==1){
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
                     getString(R.string.tomorrow));
-            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + "libra" + "/"+getTomorrowDate();
-            (new ParseBigmir((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "tomorrow"});
+            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/tomorrow/";
+            (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "tomorrow"});
         }else if(mPageNumber==2){
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
                     getString(R.string.week));
-            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/common_weekly/" + "libra" + "/";
-            (new ParseBigmir((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week"});
+            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/week/";
+            (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week"});
+        }else if(mPageNumber==3){
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+                    getString(R.string.month));
+            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/month/";
+            (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "month"});
         }
         ((TextView) rootView.findViewById(android.R.id.text1)).setTextColor(getResources().getColor(R.color.md_amber_50));
         ((TextView) rootView.findViewById(R.id.result)).setTextColor(getResources().getColor(R.color.md_amber_50));

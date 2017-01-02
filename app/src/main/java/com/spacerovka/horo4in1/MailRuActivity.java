@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.spacerovka.horo4in1.mailru.ParseMailRuHTML;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -58,7 +60,7 @@ public class MailRuActivity extends AppCompatActivity {
 //            setTomorrowDate();
 //            getBigmirData();
             
-            getMailRuData();
+//            getMailRuData();
         }
             super.onResume();
 
@@ -86,7 +88,7 @@ public class MailRuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }*/
 
-    public void getMailRuData(){
+    /*public void getMailRuData(){
         String siteUrl = "https://horo.mail.ru/prediction/" + astro + "/today/";
 //        https://horo.mail.ru/prediction/libra/today/
         (new ParseMailRuHTML(this)).execute(new String[]{siteUrl, "text_1"});
@@ -94,7 +96,7 @@ public class MailRuActivity extends AppCompatActivity {
         String siteUrlTomorrow = "https://horo.mail.ru/prediction/" + astro + "/tomorrow/";
 
         (new ParseMailRuHTML(this)).execute(new String[]{siteUrlTomorrow, "text_2"});
-    }
+    }*/
 
     public void getHyraxData(){
         String siteUrl = "http://hyrax.ru/rss_daily_common_" + astro + ".xml";

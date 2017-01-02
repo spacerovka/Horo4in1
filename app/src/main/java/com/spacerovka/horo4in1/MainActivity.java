@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.spacerovka.horo4in1.bigmir.BigmirScreenSlideActivity;
+import com.spacerovka.horo4in1.mailru.MailruScreenSlideActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,17 +24,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         setContentView(R.layout.activity_main);
-        ImageButton mailruButton = (ImageButton) findViewById(R.id.mailru);
+        Button mailruButton = (Button) findViewById(R.id.mailru);
         mailruButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "showMailRuData", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, MailRuActivity.class);
+                Intent intent = new Intent(MainActivity.this, MailruScreenSlideActivity.class);
                 startActivity(intent);
             }
         });
 
-        ImageButton bigmirButton = (ImageButton) findViewById(R.id.bigmir);
+        Button bigmirButton = (Button) findViewById(R.id.bigmir);
         bigmirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

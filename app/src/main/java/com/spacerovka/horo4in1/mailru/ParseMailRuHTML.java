@@ -1,9 +1,11 @@
-package com.spacerovka.horo4in1;
+package com.spacerovka.horo4in1.mailru;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.spacerovka.horo4in1.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,13 +17,12 @@ import org.jsoup.select.Elements;
  */
 public class ParseMailRuHTML extends AsyncTask<String, Integer, String> {
 
-    private TextView text_1;
-    private TextView text_2;
+    private TextView textView;
     private String text_param;
 
-    public ParseMailRuHTML(Activity myContext) {
-        text_1 = (TextView) myContext.findViewById(R.id.text_1);
-        text_2 = (TextView) myContext.findViewById(R.id.text_2);
+    public ParseMailRuHTML(TextView textView) {
+
+        this.textView = textView;
     }
 
     @Override
@@ -53,16 +54,8 @@ public class ParseMailRuHTML extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        if(text_param=="text_1") {
-            if (text_1 != null) {
-                text_1.setText(s);
-            }
-        }
-
-        if(text_param=="text_2") {
-            if (text_2 != null) {
-                text_2.setText(s);
-            }
+        if (textView != null) {
+            textView.setText(s);
         }
 
     }
