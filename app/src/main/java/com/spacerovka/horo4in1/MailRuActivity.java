@@ -86,20 +86,10 @@ public class MailRuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }*/
 
-    public void getBigmirData(){
-        String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + astro + "/";
-
-        (new ParseBigmirHTML(this)).execute(new String[]{siteUrl, "text_1"});
-
-        String siteUrlTomorrow = "http://goroskop.bigmir.net/bm_zodiac/daily/" + astro + "/"+tomorrowDate;
-        Log.i("DATE", tomorrowDate);
-        (new ParseBigmirHTML(this)).execute(new String[]{siteUrlTomorrow, "text_2"});
-    }
-
     public void getMailRuData(){
         String siteUrl = "https://horo.mail.ru/prediction/" + astro + "/today/";
 //        https://horo.mail.ru/prediction/libra/today/
-        (new ParseBigmirHTML(this)).execute(new String[]{siteUrl, "text_1"});
+        (new ParseMailRuHTML(this)).execute(new String[]{siteUrl, "text_1"});
 //        https://horo.mail.ru/prediction/libra/tomorrow/
         String siteUrlTomorrow = "https://horo.mail.ru/prediction/" + astro + "/tomorrow/";
 

@@ -29,19 +29,14 @@ public class ParseMailRuHTML extends AsyncTask<String, Integer, String> {
         StringBuffer buffer = new StringBuffer();
         text_param = strings[1];
         try {
-            Log.d("JSwa", "Connecting to ["+strings[0]+"]");
-            Document doc  = Jsoup.connect(strings[0]).get();
-            Log.d("JSwa", "Connected to ["+strings[0]+"]");
-
-            Elements classes = doc.getElementsByClass("article__item article__item_alignment_left article__item_html");
-            for(Element part : classes){
-                Elements paragraphs = part.getElementsByTag("p");
-                for(Element p: paragraphs){
-                    buffer.append(p.text());
-                }
-
-            }
-
+            Log.i("JSwa", "Connecting to ["+strings[0]+"]");
+            Document doc  = Jsoup.connect(strings[0]).maxBodySize(0).timeout(600000).get();
+//            Log.i("JSwa", doc.html());
+            String substring = doc.text().substring(
+                    doc.text().indexOf("Прогноз на")+10,//for today and tomorrow
+                    doc.text().indexOf("Подробнее о знаке"));
+            Log.i("DOC", substring);
+            buffer.append(substring);
         }
         catch(Throwable t) {
             t.printStackTrace();

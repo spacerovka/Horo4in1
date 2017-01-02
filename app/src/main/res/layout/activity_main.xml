@@ -35,20 +35,20 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" >
-        <Button
+        <ImageButton
             android:layout_margin="20dp"
             android:id="@+id/bigmir"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:onClick="showBigmirData"
+
             />
 
-        <Button
+        <ImageButton
             android:layout_margin="20dp"
             android:id="@+id/mailru"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:onClick="showMailRuData"
+            android:background="@color/colorAccent"
             />
     </TableRow>
         <TableRow
@@ -57,20 +57,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
 
-            <Button
+            <ImageButton
                 android:layout_margin="20dp"
                 android:id="@+id/hyrax"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:onClick="showHyraxData"
+
                 />
 
-            <Button
+            <ImageButton
                 android:layout_margin="20dp"
                 android:id="@+id/ignio"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:onClick="showIgnioData"/>
+                />
         </TableRow>
     </TableLayout>
 </LinearLayout>
