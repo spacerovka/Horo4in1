@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     >
 
-    <EditTextPreference
+    <!--<EditTextPreference
         android:title="Astrology sign"
         android:key="astro"
         android:defaultValue="libra"
-        />
+        />-->
+
+    <ListPreference     android:title="Знаки зодиака"
+        android:summary="Кликните,чтобы выбрать..."
+        android:key="astro"
+        android:defaultValue="libra"
+        android:entries="@array/listArray"
+        android:entryValues="@array/listValues" />
 </PreferenceScreen>

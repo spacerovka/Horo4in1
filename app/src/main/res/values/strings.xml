@@ -8,6 +8,7 @@
     <string name="month">Гороскоп на месяц</string>
 
     <string name="libra">Весы</string>
+    <string name="action_settings">Выбрать знак зодиака</string>
 
     <string name="title_crossfade">Simple Crossfade</string>
     <string name="title_card_flip">Card Flip</string>
