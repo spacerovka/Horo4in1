@@ -26,12 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MailRuActivity"  android:label="MailRuActivity"/>
+
         <activity
             android:name=".mailru.MailruScreenSlideActivity"
-            android:label="MailruScreenSlideActivity" />
-        <activity android:name=".bigmir.BigmirScreenSlideActivity" android:label="ScreenSlideActivity" />
+            android:label="Гороскоп от Mail.ru" />
+        <activity android:name=".bigmir.BigmirScreenSlideActivity" android:label="Гороскоп от Bigmir" />
         <activity android:name=".hyrax.HyraxScreenSlideActivity" android:label="Гороскоп от Hyrax"/>
+        <activity android:name=".ignio.IgnioScreenSlideActivity" android:label="Гороскоп от Ignio" />
     </application>
 
 </manifest>

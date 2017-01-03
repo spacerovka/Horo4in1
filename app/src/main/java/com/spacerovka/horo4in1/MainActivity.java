@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.spacerovka.horo4in1.bigmir.BigmirScreenSlideActivity;
 import com.spacerovka.horo4in1.hyrax.HyraxScreenSlideActivity;
+import com.spacerovka.horo4in1.ignio.IgnioScreenSlideActivity;
 import com.spacerovka.horo4in1.mailru.MailruScreenSlideActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent hintent = new Intent(MainActivity.this, HyraxScreenSlideActivity.class);
                 if (hintent != null) {
                     startActivity(hintent);
+                }else{
+                    Log.i("MainActivity on click","intent is null");
+                }
+
+            }
+        });
+
+        Button ignioButton = (Button) findViewById(R.id.ignio);
+        ignioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "goTo IgnioScreenSlideActivity", Toast.LENGTH_SHORT).show();
+                Intent iintent = new Intent(MainActivity.this, IgnioScreenSlideActivity.class);
+                if (iintent != null) {
+                    startActivity(iintent);
                 }else{
                     Log.i("MainActivity on click","intent is null");
                 }

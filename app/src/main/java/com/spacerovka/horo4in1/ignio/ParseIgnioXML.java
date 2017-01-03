@@ -1,8 +1,6 @@
-package com.spacerovka.horo4in1;
+package com.spacerovka.horo4in1.ignio;
 
-import android.app.Activity;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -21,23 +19,23 @@ import java.net.URL;
  */
 public class ParseIgnioXML extends AsyncTask<String, Integer, String> {
 
-    private final Activity context;
-    private TextView text_1;
-    private TextView text_2;
+
     private String text_param;
+    private TextView textView;
     String myXmlData;
+    String astro;
     
 
-    public ParseIgnioXML(Activity myContext) {
-        this.context = myContext;
-        text_1 = (TextView) myContext.findViewById(R.id.text_1);
-        text_2 = (TextView) myContext.findViewById(R.id.text_2);
+    public ParseIgnioXML(TextView textView) {
+        this.textView = textView;
+
     }
 
     @Override
     protected String doInBackground(String... strings) {
         StringBuffer buffer = new StringBuffer();
         text_param = strings[1];
+        astro = strings[2];
         try {
             myXmlData = downloadXML(strings[0]);
 
@@ -58,16 +56,8 @@ public class ParseIgnioXML extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        if(text_param=="text_1") {
-            if (text_1 != null) {
-                text_1.setText(s);
-            }
-        }
-
-        if(text_param=="text_2") {
-            if (text_2 != null) {
-                text_2.setText(s);
-            }
+        if (textView != null) {
+            textView.setText(s);
         }
 
     }
@@ -118,7 +108,7 @@ public class ParseIgnioXML extends AsyncTask<String, Integer, String> {
 
         boolean inEntry = false;
         String textValue = "";
-        String astro = PreferenceManager.getDefaultSharedPreferences(context).getString("astro", null);
+
         try {
 //setup basic xml parser
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -127,32 +117,41 @@ public class ParseIgnioXML extends AsyncTask<String, Integer, String> {
             //setup its input to parse
             xpp.setInput(new StringReader(dataToParse));
             int eventType = xpp.getEventType();
+            String tagName="";
             while ((eventType != XmlPullParser.END_DOCUMENT)){
-                String tagName="";
+
                 if(eventType == XmlPullParser.START_TAG){
                     tagName = xpp.getName();
-
                     if(tagName.equalsIgnoreCase(astro)){
                         inEntry = true;
                     }
 
                 }
                 else if(eventType == XmlPullParser.TEXT){
-                    if(inEntry && tagName.equalsIgnoreCase("today") && type.equals("text_1")){
-                        //set today
-                        textValue= xpp.getText();
-                    }else if(inEntry && tagName.equalsIgnoreCase("tomorrow") && type.equals("text_2")){
+                    if(inEntry && type.equals("today")){
+
+                        if(tagName.equalsIgnoreCase("today")) {
+                            //set today
+                            textValue = xpp.getText();
+
+                            break;
+                        }
+                    }else if(inEntry && type.equals("tomorrow") && tagName.equalsIgnoreCase("tomorrow")){
                         // set tomorrow
                         textValue= xpp.getText();
+                        break;
+                    }else if(inEntry && type.equals("week")){
+                        if(tagName.equalsIgnoreCase("common")) {
+                            textValue += xpp.getText();
+                        }
+                        if(tagName.equalsIgnoreCase("beauty")){
+                            textValue += xpp.getText();
+                            break;
+                        }
+
                     }
                 }
-                else if(eventType == XmlPullParser.END_TAG){
 
-                    if(tagName.equalsIgnoreCase(astro) && inEntry == true) {
-                        inEntry = false;
-                    }
-
-                }
                 eventType = xpp.next();
             }
 
@@ -161,6 +160,7 @@ public class ParseIgnioXML extends AsyncTask<String, Integer, String> {
             e.printStackTrace();
 //            operationStatus = false;
         }
+        Log.i("textValue", textValue);
         return textValue;
     }
 

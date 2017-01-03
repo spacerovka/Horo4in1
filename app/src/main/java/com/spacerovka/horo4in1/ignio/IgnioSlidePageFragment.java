@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.spacerovka.horo4in1.hyrax;
+package com.spacerovka.horo4in1.ignio;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -34,9 +34,9 @@ import java.util.GregorianCalendar;
  * the page number, along with some dummy text.
  *
  * <p>This class is used by the {@link
- * HyraxScreenSlideActivity} samples.</p>
+ * IgnioScreenSlideActivity} samples.</p>
  */
-public class HyraxSlidePageFragment extends Fragment {
+public class IgnioSlidePageFragment extends Fragment {
     /**
      * The argument key for the page number this fragment represents.
      */
@@ -50,15 +50,15 @@ public class HyraxSlidePageFragment extends Fragment {
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static HyraxSlidePageFragment create(int pageNumber) {
-        HyraxSlidePageFragment fragment = new HyraxSlidePageFragment();
+    public static IgnioSlidePageFragment create(int pageNumber) {
+        IgnioSlidePageFragment fragment = new IgnioSlidePageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, pageNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public HyraxSlidePageFragment() {
+    public IgnioSlidePageFragment() {
     }
 
     @Override
@@ -80,25 +80,21 @@ public class HyraxSlidePageFragment extends Fragment {
 
         Log.i("page num is ",mPageNumber+"");
         String astro = "libra";
-        String hyraxAstro = getHyraxAstro(astro);
-        Log.i("Astro ru is", hyraxAstro);
         if(mPageNumber==0){
-            //TODO find preference
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
                     getString(R.string.today));
-            String siteUrl = "http://hyrax.ru/rss_daily_common_" + "libra" + ".xml";
-            (new ParseHyraxXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today",hyraxAstro});
+            String siteUrl = "http://img.ignio.com/r/export/utf/xml/daily/com.xml";
+            (new ParseIgnioXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today",astro});
         }else if(mPageNumber==1){
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.week));
-            String siteUrl = "http://hyrax.ru/week/week.rss";
-            //http://hyrax.ru/week/week.rss
-            (new ParseHyraxXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week",hyraxAstro});
+                    getString(R.string.tomorrow));
+            String siteUrl = "http://img.ignio.com/r/export/utf/xml/daily/com.xml";
+            (new ParseIgnioXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "tomorrow",astro});
         }else if(mPageNumber==2){
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.month));
-            String siteUrl = "http://hyrax.ru/cgi-bin/bn_mon_xml.cgi";
-            (new ParseHyraxXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "month",hyraxAstro});
+                    getString(R.string.week));
+            String siteUrl = "http://img.ignio.com/r/export/utf/xml/weekly/cur.xml";
+            (new ParseIgnioXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week",astro});
         }
         ((TextView) rootView.findViewById(android.R.id.text1)).setTextColor(getResources().getColor(R.color.md_amber_50));
         ((TextView) rootView.findViewById(R.id.result)).setTextColor(getResources().getColor(R.color.md_amber_50));
@@ -117,36 +113,5 @@ public class HyraxSlidePageFragment extends Fragment {
         GregorianCalendar gc = new GregorianCalendar();
         gc.add(Calendar.DATE, 1);
         return Integer.toString(gc.get(Calendar.DAY_OF_MONTH))+"-"+ Integer.toString(gc.get(Calendar.MONTH) + 1)+"-"+ Integer.toString(gc.get(Calendar.YEAR));
-    }
-
-    private String getHyraxAstro(String astro){
-        switch (astro){
-            case "aries":
-                return "овен";
-            case "taurus":
-                return "Телец";
-            case "gemini":
-                return "Близнецы";
-            case "cancer":
-                return "Рак";
-            case "leo":
-                return "Лев";
-            case "virgo":
-                return "Дева";
-            case "libra":
-                return "Весы";
-            case "scorpio":
-                return "Скорпион";
-            case "sagittarius":
-                return "Стрелец";
-            case"capricorn":
-                return "Козерог";
-            case "aquarius":
-                return "Водолей";
-            case "pisces":
-                return "Рыбы";
-            default:
-                return null;
-        }
     }
 }
