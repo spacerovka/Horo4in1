@@ -31,6 +31,7 @@
             android:name=".mailru.MailruScreenSlideActivity"
             android:label="MailruScreenSlideActivity" />
         <activity android:name=".bigmir.BigmirScreenSlideActivity" android:label="ScreenSlideActivity" />
+        <activity android:name=".hyrax.HyraxScreenSlideActivity" android:label="Гороскоп от Hyrax"/>
     </application>
 
 </manifest>

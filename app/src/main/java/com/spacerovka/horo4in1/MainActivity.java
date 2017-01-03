@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.spacerovka.horo4in1.bigmir.BigmirScreenSlideActivity;
+import com.spacerovka.horo4in1.hyrax.HyraxScreenSlideActivity;
 import com.spacerovka.horo4in1.mailru.MailruScreenSlideActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +42,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent bintent = new Intent(MainActivity.this, BigmirScreenSlideActivity.class);
                 if (bintent != null) {
                     startActivity(bintent);
+                }else{
+                    Log.i("MainActivity on click","intent is null");
+                }
+
+            }
+        });
+
+        Button hyraxButton = (Button) findViewById(R.id.hyrax);
+        hyraxButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "goTo HyraxScreenSlideActivity", Toast.LENGTH_SHORT).show();
+                Intent hintent = new Intent(MainActivity.this, HyraxScreenSlideActivity.class);
+                if (hintent != null) {
+                    startActivity(hintent);
                 }else{
                     Log.i("MainActivity on click","intent is null");
                 }

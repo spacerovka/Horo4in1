@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.spacerovka.horo4in1.mailru.ParseMailRuHTML;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -98,7 +96,7 @@ public class MailRuActivity extends AppCompatActivity {
         (new ParseMailRuHTML(this)).execute(new String[]{siteUrlTomorrow, "text_2"});
     }*/
 
-    public void getHyraxData(){
+    /*public void getHyraxData(){
         String siteUrl = "http://hyrax.ru/rss_daily_common_" + astro + ".xml";
 //       http://hyrax.ru/rss_daily_common_libra.xml
         (new ParseHyraxXML(this)).execute(new String[]{siteUrl, "text_1"});
@@ -106,15 +104,15 @@ public class MailRuActivity extends AppCompatActivity {
         String siteUrlTomorrow = "http://www.hyrax.ru/cgi-bin/bn_xml.cgi";
 
         (new ParseHyraxXML(this)).execute(new String[]{siteUrlTomorrow, "text_2"});
-    }
+    }*/
 
-    public void getIgnioData(){
+    /*public void getIgnioData(){
         String siteUrl = "http://img.ignio.com/r/export/utf/xml/daily/com.xml";
 
         (new ParseHyraxXML(this)).execute(new String[]{siteUrl, "text_1"});
 
         (new ParseHyraxXML(this)).execute(new String[]{siteUrl, "text_2"});
-    }
+    }*/
 
     public void checkInternet(){
         ConnectivityManager cm =

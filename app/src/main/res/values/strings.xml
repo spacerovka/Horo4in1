@@ -7,6 +7,8 @@
     <string name="week">Гороскоп на неделю</string>
     <string name="month">Гороскоп на месяц</string>
 
+    <string name="libra">Весы</string>
+
     <string name="title_crossfade">Simple Crossfade</string>
     <string name="title_card_flip">Card Flip</string>
     <string name="title_screen_slide">Screen Slide</string>

@@ -1,6 +1,5 @@
-package com.spacerovka.horo4in1;
+package com.spacerovka.horo4in1.hyrax;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,23 +19,26 @@ import java.net.URL;
  */
 public class ParseHyraxXML extends AsyncTask<String, Integer, String> {
 
-    private TextView text_1;
-    private TextView text_2;
     private String text_param;
+    private TextView textView;
     String myXmlData;
+    String astro;
+    private boolean inAstro;
 
-    public ParseHyraxXML(Activity myContext) {
-        text_1 = (TextView) myContext.findViewById(R.id.text_1);
-        text_2 = (TextView) myContext.findViewById(R.id.text_2);
+    public ParseHyraxXML(TextView textView) {
+        this.textView = textView;
     }
 
     @Override
     protected String doInBackground(String... strings) {
         StringBuffer buffer = new StringBuffer();
         text_param = strings[1];
+        astro = strings[2];
+        Log.i("text_param",text_param);
+        Log.i("astro", astro);
         try {
             myXmlData = downloadXML(strings[0]);
-
+            Log.i("XML",myXmlData);
             buffer.append(parseData(myXmlData));
         }
         catch(Throwable t) {
@@ -54,16 +56,8 @@ public class ParseHyraxXML extends AsyncTask<String, Integer, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        if(text_param=="text_1") {
-            if (text_1 != null) {
-                text_1.setText(s);
-            }
-        }
-
-        if(text_param=="text_2") {
-            if (text_2 != null) {
-                text_2.setText(s);
-            }
+        if (textView != null) {
+            textView.setText(s);
         }
 
     }
@@ -86,7 +80,7 @@ public class ParseHyraxXML extends AsyncTask<String, Integer, String> {
             Log.d("Download XML", "the response is " + response);
             is = conn.getInputStream();
 
-            InputStreamReader isr = new InputStreamReader(is);
+            InputStreamReader isr = new InputStreamReader(is,"windows-1251");
             int charRead;
 
             char[] inputBuffer = new char[BUFFER_SIZE];
@@ -123,29 +117,53 @@ public class ParseHyraxXML extends AsyncTask<String, Integer, String> {
             //setup its input to parse
             xpp.setInput(new StringReader(dataToParse));
             int eventType = xpp.getEventType();
+            String tagName = "";
             while ((eventType != XmlPullParser.END_DOCUMENT)){
-                String tagName = "";
+
                 if(eventType == XmlPullParser.START_TAG){
                     tagName = xpp.getName();
-
                     if(tagName.equalsIgnoreCase("item")){
                         inEntry = true;
                     }
 
                 }
+                //else if(eventType == XmlPullParser.TEXT){
                 else if(eventType == XmlPullParser.TEXT){
+                    if(text_param.equals("today")){
+                        if(tagName.equalsIgnoreCase("description") && inEntry) {
+                            textValue = xpp.getText();
+                            inEntry = false;
+                        }
+                    }else if(text_param.equals("week")){
 
-                    if(tagName.equalsIgnoreCase("description") && inEntry){
-                        textValue= xpp.getText();
+                        if(tagName.equalsIgnoreCase("title") && inEntry){
+                            String titleText= xpp.getText();
+                            int index = titleText.indexOf("(")-1;
+
+                            if(index>1 && titleText.substring(0,index).equalsIgnoreCase(astro)){
+                                inAstro = true;
+                            }
+                        }
+                        if(tagName.equalsIgnoreCase("description") && inAstro){
+                                textValue = xpp.getText();
+                                break;
+                        }
+                    }else if(text_param.equals("month")){
+
+                        if(tagName.equalsIgnoreCase("title") && inEntry){
+                            String titleText= xpp.getText();
+                            int index = titleText.indexOf("(")-1;
+                            if(index>1 && titleText.substring(0,index).equalsIgnoreCase(astro)){
+                                inAstro = true;
+                            }
+                        }
+                        if(tagName.equalsIgnoreCase("description") && inAstro){
+                            textValue= xpp.getText();
+                            break;
+                        }
                     }
                 }
-                else if(eventType == XmlPullParser.END_TAG){
 
-                    if(inEntry == true) {
-                        inEntry = false;
-                    }
-
-                }
                 eventType = xpp.next();
             }
 
@@ -153,6 +171,7 @@ public class ParseHyraxXML extends AsyncTask<String, Integer, String> {
         }catch (Exception e){
             e.printStackTrace();
         }
+        Log.i("Parsed",textValue);
         return textValue;
     }
 

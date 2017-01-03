@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.spacerovka.horo4in1.bigmir;
+package com.spacerovka.horo4in1.hyrax;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -40,13 +40,13 @@ import com.spacerovka.horo4in1.R;
  * animating the current screen out (to the left) and the next screen in (from the right). The
  * reverse animation is played when the user presses the "previous" button.</p>
  *
- * @see BigmirSlidePageFragment
+ * @see HyraxSlidePageFragment
  */
-public class BigmirScreenSlideActivity extends AppCompatActivity {
+public class HyraxScreenSlideActivity extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 3;//set more for other sources
+    private static final int NUM_PAGES = 3;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -66,7 +66,7 @@ public class BigmirScreenSlideActivity extends AppCompatActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setBackgroundDrawable(getResources().getDrawable(R.drawable.red) );
+        mPager.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue) );
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -128,7 +128,7 @@ public class BigmirScreenSlideActivity extends AppCompatActivity {
     }
 
     /**
-     * A simple pager adapter that represents 5 {@link BigmirSlidePageFragment} objects, in
+     * A simple pager adapter that represents 5 {@link HyraxSlidePageFragment} objects, in
      * sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
@@ -138,7 +138,7 @@ public class BigmirScreenSlideActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return BigmirSlidePageFragment.create(position);
+            return HyraxSlidePageFragment.create(position);
         }
 
         @Override
