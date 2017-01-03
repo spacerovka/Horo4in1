@@ -17,25 +17,22 @@
 package com.spacerovka.horo4in1.bigmir;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.spacerovka.horo4in1.Astros;
 import com.spacerovka.horo4in1.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
- * the page number, along with some dummy text.
- *
- * <p>This class is used by the {@link
- * BigmirScreenSlideActivity} samples.</p>
- */
+
 public class BigmirSlidePageFragment extends Fragment {
     /**
      * The argument key for the page number this fragment represents.
@@ -79,21 +76,23 @@ public class BigmirSlidePageFragment extends Fragment {
                 getString(R.string.title_template_step, mPageNumber + 1));*/
 
         Log.i("page num is ",mPageNumber+"");
+        SharedPreferences sPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String astro = sPref.getString("astro", null);
         if(mPageNumber==0){
             //TODO find preference
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.today));
-            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + "libra" + "/";
+            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + astro + "/";
             (new ParseBigmir((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today"});
         }else if(mPageNumber==1){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.tomorrow));
-            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + "libra" + "/"+getTomorrowDate();
+            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/daily/" + astro + "/"+getTomorrowDate();
             (new ParseBigmir((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "tomorrow"});
         }else if(mPageNumber==2){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.week));
-            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/common_weekly/" + "libra" + "/";
+            String siteUrl = "http://goroskop.bigmir.net/bm_zodiac/common_weekly/" + astro + "/";
             (new ParseBigmir((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week"});
         }
         ((TextView) rootView.findViewById(android.R.id.text1)).setTextColor(getResources().getColor(R.color.md_amber_50));

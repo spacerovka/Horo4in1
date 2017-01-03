@@ -17,26 +17,22 @@
 package com.spacerovka.horo4in1.mailru;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.spacerovka.horo4in1.Astros;
 import com.spacerovka.horo4in1.R;
-import com.spacerovka.horo4in1.bigmir.BigmirSlidePageFragment;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
- * the page number, along with some dummy text.
- *
- * <p>This class is used by the {@link
- * MailruScreenSlideActivity} samples.</p>
- */
+
 public class MailruSlidePageFragment extends Fragment {
     /**
      * The argument key for the page number this fragment represents.
@@ -80,26 +76,28 @@ public class MailruSlidePageFragment extends Fragment {
                 getString(R.string.title_template_step, mPageNumber + 1));*/
 
         Log.i("page num is ",mPageNumber+"");
+        SharedPreferences sPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String astro = sPref.getString("astro", null);
         if(mPageNumber==0){
             //TODO find preference
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.today));
-            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/today/";
+            String siteUrl = "https://horo.mail.ru/prediction/" + astro + "/today/";
             (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today"});
         }else if(mPageNumber==1){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.tomorrow));
-            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/tomorrow/";
+            String siteUrl = "https://horo.mail.ru/prediction/" + astro + "/tomorrow/";
             (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "tomorrow"});
         }else if(mPageNumber==2){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.week));
-            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/week/";
+            String siteUrl = "https://horo.mail.ru/prediction/" + astro + "/week/";
             (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week"});
         }else if(mPageNumber==3){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.month));
-            String siteUrl = "https://horo.mail.ru/prediction/" + "libra" + "/month/";
+            String siteUrl = "https://horo.mail.ru/prediction/" + astro + "/month/";
             (new ParseMailRuHTML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "month"});
         }
         ((TextView) rootView.findViewById(android.R.id.text1)).setTextColor(getResources().getColor(R.color.md_amber_50));

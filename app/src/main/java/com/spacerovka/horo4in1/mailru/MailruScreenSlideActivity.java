@@ -31,17 +31,7 @@ import android.view.MenuItem;
 import com.spacerovka.horo4in1.MainActivity;
 import com.spacerovka.horo4in1.R;
 
-/**
- * Demonstrates a "screen-slide" animation using a {@link ViewPager}. Because {@link ViewPager}
- * automatically plays such an animation when calling {@link ViewPager#setCurrentItem(int)}, there
- * isn't any animation-specific code in this sample.
- *
- * <p>This sample shows a "next" button that advances the user to the next step in a wizard,
- * animating the current screen out (to the left) and the next screen in (from the right). The
- * reverse animation is played when the user presses the "previous" button.</p>
- *
- * @see MailruSlidePageFragment
- */
+
 public class MailruScreenSlideActivity extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.

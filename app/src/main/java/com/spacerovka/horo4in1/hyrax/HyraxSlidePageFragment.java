@@ -17,25 +17,22 @@
 package com.spacerovka.horo4in1.hyrax;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.spacerovka.horo4in1.Astros;
 import com.spacerovka.horo4in1.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
- * the page number, along with some dummy text.
- *
- * <p>This class is used by the {@link
- * HyraxScreenSlideActivity} samples.</p>
- */
+
 public class HyraxSlidePageFragment extends Fragment {
     /**
      * The argument key for the page number this fragment represents.
@@ -79,23 +76,24 @@ public class HyraxSlidePageFragment extends Fragment {
                 getString(R.string.title_template_step, mPageNumber + 1));*/
 
         Log.i("page num is ",mPageNumber+"");
-        String astro = "libra";
-        String hyraxAstro = getHyraxAstro(astro);
+        SharedPreferences sPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String astro = sPref.getString("astro", null);
+        String hyraxAstro = Astros.getHyraxAstro(astro);
         Log.i("Astro ru is", hyraxAstro);
         if(mPageNumber==0){
             //TODO find preference
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.today));
             String siteUrl = "http://hyrax.ru/rss_daily_common_" + "libra" + ".xml";
             (new ParseHyraxXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "today",hyraxAstro});
         }else if(mPageNumber==1){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.week));
             String siteUrl = "http://hyrax.ru/week/week.rss";
             //http://hyrax.ru/week/week.rss
             (new ParseHyraxXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "week",hyraxAstro});
         }else if(mPageNumber==2){
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(Astros.getHyraxAstro(astro)+". "+
                     getString(R.string.month));
             String siteUrl = "http://hyrax.ru/cgi-bin/bn_mon_xml.cgi";
             (new ParseHyraxXML((TextView) rootView.findViewById(R.id.result))).execute(new String[]{siteUrl, "month",hyraxAstro});
@@ -119,34 +117,5 @@ public class HyraxSlidePageFragment extends Fragment {
         return Integer.toString(gc.get(Calendar.DAY_OF_MONTH))+"-"+ Integer.toString(gc.get(Calendar.MONTH) + 1)+"-"+ Integer.toString(gc.get(Calendar.YEAR));
     }
 
-    private String getHyraxAstro(String astro){
-        switch (astro){
-            case "aries":
-                return "овен";
-            case "taurus":
-                return "Телец";
-            case "gemini":
-                return "Близнецы";
-            case "cancer":
-                return "Рак";
-            case "leo":
-                return "Лев";
-            case "virgo":
-                return "Дева";
-            case "libra":
-                return "Весы";
-            case "scorpio":
-                return "Скорпион";
-            case "sagittarius":
-                return "Стрелец";
-            case"capricorn":
-                return "Козерог";
-            case "aquarius":
-                return "Водолей";
-            case "pisces":
-                return "Рыбы";
-            default:
-                return null;
-        }
-    }
+
 }

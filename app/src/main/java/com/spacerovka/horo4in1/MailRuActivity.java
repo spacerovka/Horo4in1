@@ -39,7 +39,7 @@ public class MailRuActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         sPref = PreferenceManager.getDefaultSharedPreferences(this);
-
+        astro = sPref.getString("astro", null);
 
 
 //          TO-DO add this to button

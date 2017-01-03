@@ -1,7 +1,9 @@
 package com.spacerovka.horo4in1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +27,16 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         setContentView(R.layout.activity_main);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        SharedPreferences sPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String astro = sPref.getString("astro", null);
+        Log.i("astro", astro);
+        if(astro==null){
+            sPref.edit().putString("astro", "libra").commit();
+        }
+
         Button mailruButton = (Button) findViewById(R.id.mailru);
         mailruButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,24 +93,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showBigmirData(View view){
-//               Toast.makeText(MainActivity.this, "showBigmirData", Toast.LENGTH_SHORT).show();
 
-    }
-
-    /*private void showMailRuData(View view){
-        Toast.makeText(MainActivity.this, "showMailRuData", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainActivity.this, MailRuActivity.class);
-        startActivity(intent);
-    }*/
-
-    private void showHyraxData(View view){
-        Toast.makeText(MainActivity.this, "showHyraxData", Toast.LENGTH_SHORT).show();
-
-    }
-
-    private void showIgnioData(View view){
-        Toast.makeText(MainActivity.this, "showIgnioData", Toast.LENGTH_SHORT).show();
-
-    }
 }
