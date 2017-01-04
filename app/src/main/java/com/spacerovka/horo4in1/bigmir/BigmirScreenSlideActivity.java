@@ -107,6 +107,7 @@ public class BigmirScreenSlideActivity extends AppCompatActivity {
                 // will do nothing.
                 if(mPager.getCurrentItem() == mPagerAdapter.getCount() - 1){
                     NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }else {
                     mPager.setCurrentItem(mPager.getCurrentItem() + 1);
                 }
@@ -134,5 +135,13 @@ public class BigmirScreenSlideActivity extends AppCompatActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
     }
 }
