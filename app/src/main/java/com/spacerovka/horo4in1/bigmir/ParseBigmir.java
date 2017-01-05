@@ -1,6 +1,5 @@
 package com.spacerovka.horo4in1.bigmir;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -45,7 +44,8 @@ public class ParseBigmir extends AsyncTask<String, Integer, String> {
                 }
 
             }
-
+            doc = null;
+            classes = null;
 
 
         }

@@ -3,6 +3,7 @@ package com.spacerovka.horo4in1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,15 +17,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spacerovka.horo4in1.bigmir.BigmirScreenSlideActivity;
+import com.spacerovka.horo4in1.helper.AsyncDrawable;
+import com.spacerovka.horo4in1.helper.BitmapWorkerTask;
 import com.spacerovka.horo4in1.hyrax.HyraxScreenSlideActivity;
 import com.spacerovka.horo4in1.ignio.IgnioScreenSlideActivity;
 import com.spacerovka.horo4in1.mailru.MailruScreenSlideActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Bitmap mPlaceHolderBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         setContentView(R.layout.activity_main);
+        ImageView background = (ImageView) findViewById(R.id.image);
+        String uri = "@drawable/stars";
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+        loadBitmap(imageResource, background);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -140,5 +150,18 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
     }
+
+
+    public void loadBitmap(int resId, ImageView imageView) {
+        if (BitmapWorkerTask.cancelPotentialWork(resId, imageView)) {
+            final BitmapWorkerTask task = new BitmapWorkerTask(this, imageView);
+            final AsyncDrawable asyncDrawable =
+                    new AsyncDrawable(getResources(), mPlaceHolderBitmap, task);
+            imageView.setImageDrawable(asyncDrawable);
+            task.execute(resId);
+        }
+    }
+
+
 
 }

@@ -19,6 +19,7 @@ package com.spacerovka.horo4in1.hyrax;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
@@ -27,9 +28,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.spacerovka.horo4in1.MainActivity;
 import com.spacerovka.horo4in1.R;
+import com.spacerovka.horo4in1.helper.AsyncDrawable;
+import com.spacerovka.horo4in1.helper.BitmapWorkerTask;
 
 
 public class HyraxScreenSlideActivity extends AppCompatActivity {
@@ -53,7 +57,10 @@ public class HyraxScreenSlideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
-
+//        ImageView background = (ImageView) findViewById(R.id.image);
+//        String uri = "@drawable/blue";
+//        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+//        loadBitmap(imageResource, background);
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue) );
@@ -141,8 +148,19 @@ public class HyraxScreenSlideActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        startActivity(new Intent(this, MainActivity.class));
+        this.finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
+    }
+
+    private Bitmap mPlaceHolderBitmap;
+    public void loadBitmap(int resId, ImageView imageView) {
+        if (BitmapWorkerTask.cancelPotentialWork(resId, imageView)) {
+            final BitmapWorkerTask task = new BitmapWorkerTask(this, imageView);
+            final AsyncDrawable asyncDrawable =
+                    new AsyncDrawable(getResources(), mPlaceHolderBitmap, task);
+            imageView.setImageDrawable(asyncDrawable);
+            task.execute(resId);
+        }
     }
 }
