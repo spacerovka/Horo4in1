@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/custom_toast_layout"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="18dp"
+    android:background="@drawable/round">
+    <TextView android:id="@+id/textToShow"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Подключение к интернету отсутствует. Пожалуйста, повторите попытку позднее"
+
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/md_pink_A400"
+        />
+
+</LinearLayout>

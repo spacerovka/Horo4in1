@@ -1,15 +1,22 @@
 package com.spacerovka.horo4in1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spacerovka.horo4in1.bigmir.BigmirScreenSlideActivity;
@@ -43,9 +50,8 @@ public class MainActivity extends AppCompatActivity {
         mailruButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "showMailRuData", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, MailruScreenSlideActivity.class);
-                startActivity(intent);
+                startActivityWithConnection(intent);
             }
         });
 
@@ -53,14 +59,8 @@ public class MainActivity extends AppCompatActivity {
         bigmirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "goTo ScreenSlideActivity", Toast.LENGTH_SHORT).show();
                 Intent bintent = new Intent(MainActivity.this, BigmirScreenSlideActivity.class);
-                if (bintent != null) {
-                    startActivity(bintent);
-                }else{
-                    Log.i("MainActivity on click","intent is null");
-                }
-
+                startActivityWithConnection(bintent);
             }
         });
 
@@ -68,13 +68,8 @@ public class MainActivity extends AppCompatActivity {
         hyraxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "goTo HyraxScreenSlideActivity", Toast.LENGTH_SHORT).show();
                 Intent hintent = new Intent(MainActivity.this, HyraxScreenSlideActivity.class);
-                if (hintent != null) {
-                    startActivity(hintent);
-                }else{
-                    Log.i("MainActivity on click","intent is null");
-                }
+                startActivityWithConnection(hintent);
 
             }
         });
@@ -83,14 +78,8 @@ public class MainActivity extends AppCompatActivity {
         ignioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "goTo IgnioScreenSlideActivity", Toast.LENGTH_SHORT).show();
                 Intent iintent = new Intent(MainActivity.this, IgnioScreenSlideActivity.class);
-                if (iintent != null) {
-                    startActivity(iintent);
-                }else{
-                    Log.i("MainActivity on click","intent is null");
-                }
-
+                startActivityWithConnection(iintent);
             }
         });
     }
@@ -113,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent i = new Intent(this, HoroPreferencesActivity.class);
             startActivity(i);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
             return true;
         }
@@ -120,5 +110,35 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public boolean checkInternet(){
+        ConnectivityManager cm =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+//        isConnected = false;
+        if(activeNetwork!= null) {
+            return activeNetwork.isConnected();
+        }
+        return  false;
+    }
+
+    private void startActivityWithConnection(Intent intent){
+        if(checkInternet()){
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }else{
+
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast,
+                    (ViewGroup) findViewById(R.id.custom_toast_layout));
+            TextView text = (TextView) layout.findViewById(R.id.textToShow);
+            text.setText("Подключение к интернету отсутствует. Пожалуйста, повторите попытку позднее");
+            Toast toast = new Toast(MainActivity.this);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.setView(layout);
+            toast.show();
+        }
+    }
 
 }

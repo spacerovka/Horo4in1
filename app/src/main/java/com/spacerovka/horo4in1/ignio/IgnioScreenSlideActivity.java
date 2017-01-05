@@ -36,7 +36,7 @@ public class IgnioScreenSlideActivity extends AppCompatActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 4;//set explicitly for other sources
+    private static final int NUM_PAGES = 3;//set explicitly for other sources
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -108,6 +108,7 @@ public class IgnioScreenSlideActivity extends AppCompatActivity {
                 // will do nothing.
                 if(mPager.getCurrentItem() == mPagerAdapter.getCount() - 1){
                     NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }else {
                     mPager.setCurrentItem(mPager.getCurrentItem() + 1);
                 }
@@ -135,5 +136,12 @@ public class IgnioScreenSlideActivity extends AppCompatActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+    }
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
     }
 }
